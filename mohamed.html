@@ -36,7 +36,7 @@
             box-shadow: 0 0 15px 5px #0077b6;
         }
 
-        /* خلفية داكنة */
+        /* خلفية داكنة 
         .neural-background {
             position: absolute;
             top: 0;
@@ -45,9 +45,9 @@
             height: 220px;
             background-color: rgba(60, 60, 60, 0.85);
             z-index: 0;
-        }
+        }*/
 
-        /* النودات */
+        /* النودات 
         .network-layer {
             position: absolute;
             top: 0;
@@ -64,7 +64,7 @@
             background-color: #00b4d8;
             border-radius: 50%;
             animation: pulse 2s infinite alternate;
-        }
+        }*/
 
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -295,6 +295,45 @@
             width: 80px;
             height: 80px;
         }
+/* الخلفية الزرقاء الثابتة */
+.neural-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(135deg, rgba(0, 10, 30, 0.9), rgba(0, 20, 60, 0.85));
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* إعداد حاوية الأكواد المتحركة */
+.codes-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 220px;
+    z-index: 1;
+    overflow: hidden;
+    animation: scroll-up 20s linear infinite;
+}
+
+/* إعداد الأكواد البرمجية بلون أزرق وتأثير الهكرز */
+.code {
+    font-size: 0.8rem;
+    color: rgba(0, 150, 255, 0.8); /* لون أزرق ساطع */
+    white-space: nowrap;
+    position: absolute;
+    font-family: 'Courier New', Courier, monospace; /* خط طرفي */
+}
+
+/* حركة الأكواد للأعلى */
+@keyframes scroll-up {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
+}
+
 
         
     </style>
@@ -302,22 +341,69 @@
 <body>
 
     <div class="info-card">
-        <!-- خلفية داكنة -->
-        <div class="neural-background"></div>
-
-        <!-- النودات فقط بدون الخطوط -->
-        <div class="network-layer">
-            <div class="node" style="left: 5%; top: 30%;"></div>
-            <div class="node" style="left: 35%; top: 10%;"></div>
-            <div class="node" style="left: 25%; top: 60%;"></div>
-            <div class="node" style="left: 55%; top: 20%;"></div>
-            <div class="node" style="left: 70%; top: 80%;"></div>
-            <div class="node" style="left: 90%; top: 30%;"></div>
+        <div class="neural-background">
+            <!-- طبقة الأكواد المتحركة -->
+            <div class="codes-container">
+                <div class="code" style="top: 0%; left: 5%;">print("Hello, World!") # Python</div>
+                <div class="code" style="top: 8%; left: 20%;">console.log('Hello, World!'); // JavaScript</div>
+                <div class="code" style="top: 15%; left: 30%;">System.out.println("Hello, World!"); // Java</div>
+                <div class="code" style="top: 22%; left: 55%;">cout &lt;&lt; "Hello, World!"; // C++</div>
+                <div class="code" style="top: 30%; left: 10%;">Console.WriteLine("Hello, World!"); // C#</div>
+                <div class="code" style="top: 38%; left: 40%;">echo "Hello, World!"; // PHP</div>
+                <div class="code" style="top: 45%; left: 15%;">fmt.Println("Hello, World!") // Go</div>
+                <div class="code" style="top: 52%; left: 5%;">puts 'Hello, World!' # Ruby</div>
+                <div class="code" style="top: 60%; left: 70%;">println!("Hello, World!"); // Rust</div>
+                <div class="code" style="top: 65%; left: 35%;">print("Hello, World!") // Swift</div>
+                <div class="code" style="top: 72%; left: 20%;">SELECT * FROM users; // SQL</div>
+                <div class="code" style="top: 78%; left: 50%;">fprintf(stdout, "Hello, World!\n"); // C</div>
+                <div class="code" style="top: 85%; left: 25%;">Write-Host "Hello, World!" // PowerShell</div>
+                <div class="code" style="top: 92%; left: 15%;">DISPLAY "Hello, World!" // COBOL</div>
+                <div class="code" style="top: 99%; left: 60%;">echo Hello, World! // Shell</div>
+                <div class="code" style="top: 105%; left: 10%;">print("Hello, World!") # R</div>
+                <div class="code" style="top: 115%; left: 40%;">alert('Hello, World!'); // JavaScript</div>
+                <div class="code" style="top: 120%; left: 30%;">System.Console.WriteLine("Hello, World!"); // F#</div>
+                <div class="code" style="top: 128%; left: 45%;">data HelloWorld = "Hello, World!" -- Haskell</div>
+                <div class="code" style="top: 135%; left: 65%;">disp('Hello, World!') % MATLAB</div>
+                <div class="code" style="top: 140%; left: 10%;">printf("Hello, World!\n"); // C</div>
+                <div class="code" style="top: 148%; left: 30%;">print *, "Hello, World!" ! Fortran</div>
+                <div class="code" style="top: 155%; left: 55%;">IO.puts("Hello, World!") # Elixir</div>
+                <div class="code" style="top: 160%; left: 5%;">main = putStrLn "Hello, World!" -- Haskell</div>
+                <div class="code" style="top: 168%; left: 25%;">println("Hello, World!") // Julia</div>
+                <div class="code" style="top: 175%; left: 40%;">print("Hello, World!") // Dart</div>
+                <div class="code" style="top: 182%; left: 15%;">echo 'Hello, World!' // Perl</div>
+                <div class="code" style="top: 190%; left: 35%;">console.log('Hello, World!'); // TypeScript</div>
+                <div class="code" style="top: 198%; left: 50%;">document.write("Hello, World!"); // HTML</div>
+                <div class="code" style="top: 205%; left: 65%;">(display "Hello, World!") ; Scheme</div>
+                <div class="code" style="top: 212%; left: 5%;">puts "Hello, World!" // Tcl</div>
+                <div class="code" style="top: 220%; left: 20%;">System.out.print("Hello, World!"); // Kotlin</div>
+                <div class="code" style="top: 228%; left: 45%;">echo -e "Hello, World!" // Bash</div>
+                <div class="code" style="top: 235%; left: 55%;">System.print("Hello, World!") // Smalltalk</div>
+                <div class="code" style="top: 242%; left: 15%;">writeln("Hello, World!") // Pascal</div>
+                <div class="code" style="top: 250%; left: 30%;">PRINT "Hello, World!" // BASIC</div>
+                <div class="code" style="top: 258%; left: 40%;">MsgBox "Hello, World!" // VBA</div>
+                <div class="code" style="top: 265%; left: 5%;">NSLog(@"Hello, World!"); // Objective-C</div>
+                <div class="code" style="top: 272%; left: 55%;">say "Hello, World!" // Perl 6</div>
+                <div class="code" style="top: 280%; left: 25%;">trace("Hello, World!") // ActionScript</div>
+                <div class="code" style="top: 288%; left: 45%;">Debug.Print "Hello, World!" // VB.NET</div>
+                <div class="code" style="top: 295%; left: 60%;">$write("Hello, World!"); // Verilog</div>
+                <div class="code" style="top: 300%; left: 20%;">System.debug("Hello, World!") // Crystal</div>
+                <div class="code" style="top: 308%; left: 15%;">console("Hello, World!") // Pharo</div>
+                <div class="code" style="top: 315%; left: 50%;">write-host "Hello, World!" // PowerShell</div>
+                <div class="code" style="top: 322%; left: 40%;">trace("Hello, World!") // OpenEdge ABL</div>
+            </div>
+            
+            
         </div>
+        
+        
+        
+        
+        
+        
 
         <!-- الروبوت المتحرك على اليسار -->
         <div class="robot-animation-left">
-            <dotlottie-player src="https://lottie.host/969f8d24-e78e-45da-9e14-b24625778974/M8a90FhsrM.json" background="transparent" speed="0.4" style="width: 100%; height: 100%;" loop autoplay></dotlottie-player>
+            <dotlottie-player src="https://lottie.host/c8b2e1fd-f9c6-479c-a974-e13c6036ba23/e5MVs8sVeZ.json" background="transparent" speed="1" style="width: 100%; height: 100%;" loop autoplay></dotlottie-player>   
         </div>
 
         <!-- الروبوت المتحرك على اليمين -->
@@ -384,3 +470,5 @@
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </body>
 </html>
+
+
