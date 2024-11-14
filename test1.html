@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شبكة بتأثير النبضة الكهربائية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1a1a1a; /* خلفية داكنة */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .network-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* تصميم العقد */
+        .node {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #00b4d8;
+            border-radius: 50%;
+        }
+
+        /* تصميم الخطوط بين العقد */
+        .line {
+            position: absolute;
+            width: 2px;
+            background-color: rgba(0, 119, 182, 0.3);
+            transform-origin: top left;
+        }
+
+        /* تأثير النبضة الكهربائية */
+        .pulse {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ffcc00;
+            opacity: 0.8;
+            animation: pulseEffect 1s ease-out forwards;
+        }
+
+        @keyframes pulseEffect {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="network-container" id="networkContainer"></div>
+
+    <script>
+        const networkContainer = document.getElementById('networkContainer');
+        const nodes = [];
+
+        // إنشاء العقد وتوزيعها عشوائيًا
+        function createNode(x, y) {
+            const node = document.createElement('div');
+            node.classList.add('node');
+            node.style.left = `${x}px`;
+            node.style.top = `${y}px`;
+            networkContainer.appendChild(node);
+            nodes.push({ element: node, x, y });
+        }
+
+        // توليد العقد عشوائيًا
+        for (let i = 0; i < 8; i++) {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            createNode(x, y);
+        }
+
+        // إنشاء خط بين عقدتين
+        function createLine(x1, y1, x2, y2) {
+            const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+            const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+            const line = document.createElement('div');
+            line.classList.add('line');
+            line.style.width = `${length}px`;
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.left = `${x1}px`;
+            line.style.top = `${y1}px`;
+            networkContainer.appendChild(line);
+        }
+
+        // توصيل العقد بخطوط
+        nodes.forEach((node, index) => {
+            if (index < nodes.length - 1) {
+                createLine(node.x, node.y, nodes[index + 1].x, nodes[index + 1].y);
+            }
+        });
+
+        // إنشاء نبضة كهربائية بين عقدتين
+        function createPulse(x1, y1, x2, y2) {
+            const pulse = document.createElement('div');
+            pulse.classList.add('pulse');
+            pulse.style.left = `${x1}px`;
+            pulse.style.top = `${y1}px`;
+
+            // حساب انتقال النبضة نحو العقدة الهدف
+            const deltaX = x2 - x1;
+            const deltaY = y2 - y1;
+            pulse.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+            networkContainer.appendChild(pulse);
+
+            // إزالة النبضة بعد انتهاء التأثير
+            setTimeout(() => {
+                pulse.remove();
+            }, 1000);
+        }
+
+        // إرسال نبضة كهربائية بين العقد بشكل دوري
+        function sendElectricPulse() {
+            nodes.forEach((node, index) => {
+                setTimeout(() => {
+                    const targetNode = nodes[(index + 1) % nodes.length];
+                    createPulse(node.x, node.y, targetNode.x, targetNode.y);
+                }, index * 500);
+            });
+        }
+
+        // بدء تشغيل النبضة الكهربائية المتكررة
+        setInterval(sendElectricPulse, 2000);
+    </script>
+
+</body>
+</html>
