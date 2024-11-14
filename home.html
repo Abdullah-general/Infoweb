@@ -436,6 +436,83 @@
     background-color: #005f99;
 }
 
+  /* University Info Section */
+  .university-info {
+        text-align: center;
+        margin: 30px auto;
+        padding: 25px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+        border-radius: 20px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        width: 80%;
+        max-width: 900px;
+        overflow: hidden;
+        animation: fadeIn 2s ease-out;
+    }
+
+    /* Add glowing gradient border */
+    .university-info::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background: linear-gradient(135deg, #ff8c00, #ff0080, #40e0d0, #8a2be2);
+        background-size: 300% 300%;
+        animation: gradientBorder 6s infinite;
+        border-radius: 20px;
+        filter: blur(10px);
+    }
+
+    @keyframes gradientBorder {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Logo Styling */
+    .university-logo {
+        width: 140px; /* Slightly larger logo */
+        height: auto;
+        margin-bottom: 20px;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .university-logo:hover {
+        transform: scale(1.1);
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Description Text */
+    .university-description {
+        font-size: 1.4rem;
+        color: #f5f5f5;
+        line-height: 1.8;
+        direction: rtl; /* Right-to-left alignment for Arabic text */
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        margin-top: 15px;
+        animation: fadeIn 1.5s ease-out;
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
 
 
@@ -468,7 +545,15 @@
     <a href="#">الأبحاث</a>
     <a href="#">تواصل معنا</a>
 </div>
-
+<!-- University Logo and Description -->
+<div class="university-info">
+    <img src="cihan-logo.png" alt="شعار جامعة جيهان - أربيل" class="university-logo">
+    <p class="university-description">
+        جامعة جيهان - أربيل هي إحدى الجامعات الخاصة الرائدة في إقليم كردستان العراق. 
+        تسعى الجامعة إلى التميز الأكاديمي من خلال تقديم برامج تعليمية متنوعة تهدف إلى 
+        تزويد الطلاب بالمعرفة والمهارات اللازمة للنجاح في حياتهم المهنية.
+    </p>
+</div>
 
     <!-- ترحيب بالزائرين -->
     <div class="welcome-section">
