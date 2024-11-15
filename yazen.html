@@ -104,13 +104,29 @@
         }
 
         h2 {
-            font-size: 2rem;
-            color: #af9a00;
-            margin-bottom: 10px;
-            z-index: 2;
-            text-align: center;
-            position: relative;
-        }
+    font-size: 2rem;
+    margin-bottom: 10px;
+    z-index: 1;
+    background: linear-gradient(270deg, #003f88, #005f99, #0077b6, #0096c7, #48cae4, #4b0082);
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradientShift 6s linear infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
         p {
             color: #000000;
             z-index: 2;

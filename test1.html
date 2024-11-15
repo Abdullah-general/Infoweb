@@ -3,162 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معلومات الأستاذ</title>
+    <title>شبكة البيانات المتصلة</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            background-color: #f3f4f6;
+            background: #002b54; /* خلفية داكنة */
+            overflow: hidden;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
         }
-
-        .info-card {
-            position: relative;
-            width: 90%;
-            max-width: 800px;
-            background: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 15px 5px #0077b6;
-            text-align: center;
-            z-index: 2;
-        }
-
-        /* خلفية الشبكة المتحركة */
-        .network-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 220px;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        /* نقاط الشبكة */
-        .node {
-            width: 10px;
-            height: 10px;
-            background-color: #00b4d8;
-            border-radius: 50%;
-            position: absolute;
-        }
-
-        /* خطوط الشبكة */
-        .line {
-            position: absolute;
-            width: 2px;
-            background-color: rgba(0, 150, 255, 0.6);
-            z-index: 1;
-        }
-
-        /* حركة إشارات الشبكة */
-        .signal {
-            width: 10px;
-            height: 10px;
-            background-color: #00cfff;
-            border-radius: 50%;
-            position: absolute;
-            animation: moveSignal 4s infinite;
-            z-index: 2;
-        }
-
-        /* حركة الإشارة بين العقد */
-        @keyframes moveSignal {
-            0% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(200px, 100px); /* انتقال بين النقاط */
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-
-        .professor-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            border: 3px solid #0077b6;
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        h2 {
-            font-size: 2rem;
-            color: #af9a00;
-            margin-bottom: 10px;
-            z-index: 1;
-        }
-
-        p {
-            font-size: 1rem;
-            color: #333;
-            z-index: 1;
-            margin-top: 10px;
-        }
-
-        .btn-back {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #0077b6;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            z-index: 1;
-        }
-
-        .btn-back:hover {
-            background-color: #005f99;
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
+    <canvas id="networkCanvas"></canvas>
 
-    <div class="info-card">
-        <div class="network-background">
-            <!-- إضافة نقاط الشبكة -->
-            <div class="node" style="top: 10%; left: 10%;"></div>
-            <div class="node" style="top: 50%; left: 30%;"></div>
-            <div class="node" style="top: 80%; left: 60%;"></div>
-            <div class="node" style="top: 20%; left: 70%;"></div>
-            <div class="node" style="top: 60%; left: 90%;"></div>
+    <script>
+        const canvas = document.getElementById("networkCanvas");
+        const ctx = canvas.getContext("2d");
 
-            <!-- إضافة خطوط بين النقاط -->
-            <div class="line" style="top: 10%; left: 10%; height: 40%; transform: rotate(45deg);"></div>
-            <div class="line" style="top: 50%; left: 30%; height: 30%; transform: rotate(-30deg);"></div>
-            <div class="line" style="top: 80%; left: 60%; height: 20%; transform: rotate(60deg);"></div>
+        // ضبط حجم الكانفس
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-            <!-- إضافة الإشارة المتحركة -->
-            <div class="signal" style="top: 10%; left: 10%;"></div>
-        </div>
+        const particles = [];
+        const particleCount = 50;
+        const maxDistance = 150;
 
-        <!-- صورة الأستاذ -->
-        <img src="Adil-Hussain-Mohammed-200x200.jpg" alt="صورة الأستاذ" class="professor-img">
+        // إنشاء نقاط البيانات
+        class Particle {
+            constructor(x, y, vx, vy) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.radius = 3;
+            }
 
-        <!-- الاسم والتخصص -->
-        <h2><b>Adil Hussein Mohammed</b></h2>
-        <p>Specialization: Communication Engineering</p>
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "#48cae4"; // لون النقاط
+                ctx.fill();
+            }
 
-        <!-- زر العودة -->
-        <a href="Home.html" class="btn-back">Return back to the home page</a>
-    </div>
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
 
+                // ارتداد عند الحواف
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+
+        // إنشاء مجموعة من النقاط
+        for (let i = 0; i < particleCount; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const vx = (Math.random() - 0.5) * 2; // سرعة عشوائية
+            const vy = (Math.random() - 0.5) * 2; // سرعة عشوائية
+            particles.push(new Particle(x, y, vx, vy));
+        }
+
+        // رسم الخطوط بين النقاط القريبة
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(72, 202, 228, ${1 - distance / maxDistance})`; // تقليل الشفافية مع زيادة المسافة
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // تحديث الرسومات
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // تنظيف الكانفس
+            particles.forEach((particle) => {
+                particle.update();
+                particle.draw();
+            });
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+
+        // بدء الحركة
+        animate();
+
+        // إعادة ضبط حجم الكانفس عند تغيير حجم النافذة
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>

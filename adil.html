@@ -70,38 +70,24 @@
     font-size: 2rem;
     margin-bottom: 10px;
     z-index: 1;
-    background: linear-gradient(
-        270deg, /* زاوية التدرج للحصول على حركة مستمرة */
-        #003f88,
-        #005f99,
-        #0077b6,
-        #0096c7,
-        #00b4d8,
-        #48cae4,
-        #90e0ef,
-        #b3d1ff,
-        #90e0ef,
-        #48cae4,
-        #00b4d8,
-        #0096c7,
-        #0077b6,
-        #005f99,
-        #003f88
-    );
-    background-size: 400% 400%; /* توسيع الخلفية للحصول على حركة سلسة مستمرة */
+    background: linear-gradient(270deg, #003f88, #005f99, #0077b6, #0096c7, #48cae4, #90e0ef);
+    background-size: 400% 400%;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    animation: gradientShift 15s linear infinite;
+    animation: gradientShift 7s linear infinite;
 }
 
-/* حركة دائرية مستمرة للتدرج */
+/* حركة التدرج */
 @keyframes gradientShift {
     0% {
         background-position: 0% 50%;
     }
-    100% {
+    50% {
         background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
     }
 }
 
@@ -273,7 +259,9 @@
 <body>
 
     <div class="info-card">
-        <div class="map-background" id="map-background"></div>
+        <div class="map-background">
+            <canvas id="networkCanvas"></canvas>
+        </div>
 
         <div class="centered-content">
             <!-- نموذج يسار الصورة -->
@@ -331,6 +319,88 @@
     </div>
 
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    
+    <script>
+        const canvas = document.getElementById("networkCanvas");
+        const ctx = canvas.getContext("2d");
+    
+        // ضبط حجم الكانفس ليتماشى مع حجم العنصر الأب
+        function resizeCanvas() {
+            const parent = document.querySelector('.map-background');
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
+        }
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+    
+        const particles = [];
+        const particleCount = 50;
+        const maxDistance = 150;
+    
+        class Particle {
+            constructor(x, y, vx, vy) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.radius = 3;
+            }
+    
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "#48cae4"; // لون النقاط
+                ctx.fill();
+            }
+    
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+    
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+    
+        for (let i = 0; i < particleCount; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const vx = (Math.random() - 0.5) * 2;
+            const vy = (Math.random() - 0.5) * 2;
+            particles.push(new Particle(x, y, vx, vy));
+        }
+    
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+                    if (distance < maxDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(72, 202, 228, ${1 - distance / maxDistance})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+    
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((particle) => {
+                particle.update();
+                particle.draw();
+            });
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+    
+        animate();
+    </script>
     
 </body>
 </html>
