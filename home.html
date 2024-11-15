@@ -909,32 +909,55 @@
         });
 
         function toggleLanguage() {
-            const currentLang = document.documentElement.lang;
-            const menuItems = document.querySelectorAll("nav ul li a");
-            const welcomeSection = document.querySelector(".welcome-section h2");
-            const welcomeText = document.querySelector(".welcome-section p");
-            const languageButton = document.querySelector(".language-toggle");
+    var currentLang = document.documentElement.lang;
+    var newLang = currentLang === "ar" ? "en" : (currentLang === "en" ? "ku" : "ar");
+    document.documentElement.lang = newLang;
+    localStorage.setItem('lang', newLang); // تخزين اللغة الجديدة في localStorage
+    window.location.reload(); // إعادة تحميل الصفحة لتطبيق التغيير
+}
+function updateLanguageUI(lang) {
+    var languageButton = document.querySelector('.language-toggle');
+    var menuItems = document.querySelectorAll("nav ul li a");
+    var welcomeSection = document.querySelector(".welcome-section h2");
+    var welcomeText = document.querySelector(".welcome-section p");
 
-            if (currentLang === "ar") {
-                document.documentElement.lang = "en";
-                menuItems[0].textContent = "Home";
-                menuItems[1].textContent = "About Professors";
-                menuItems[2].textContent = "Research";
-                menuItems[3].textContent = "Contact Us";
-                welcomeSection.textContent = "Welcome to the Professors' Website!";
-                welcomeText.textContent = "We provide you with comprehensive information about the best professors in their fields, along with details about their academic and teaching experience. Enjoy getting to know our faculty members and benefit from their expertise.";
-                languageButton.textContent = "AR";
-            } else {
-                document.documentElement.lang = "ar";
-                menuItems[0].textContent = "الصفحة الرئيسية";
-                menuItems[1].textContent = "عن الأساتذة";
-                menuItems[2].textContent = "الأبحاث";
-                menuItems[3].textContent = "تواصل معنا";
-                welcomeSection.textContent = "مرحبًا بكم في موقع الأساتذة!";
-                welcomeText.textContent = "نحن نقدم لكم معلومات شاملة عن أفضل الأساتذة في مجالاتهم مع تفاصيل حول خبراتهم الأكاديمية والتدريسية. استمتعوا بالتعرف على أعضاء هيئة التدريس لدينا واستفيدوا من خبراتهم.";
-                languageButton.textContent = "EN";
-            }
-        }
+    switch(lang) {
+        case 'en':
+            languageButton.textContent = "AR";
+            menuItems[0].textContent = "Home";
+            menuItems[1].textContent = "About Professors";
+            menuItems[2].textContent = "Research";
+            menuItems[3].textContent = "Contact Us";
+            welcomeSection.textContent = "Welcome to the Professors' Website!";
+            welcomeText.textContent = "We provide you with comprehensive information about the best professors in their fields, along with details about their academic and teaching experience. Enjoy getting to know our faculty members and benefit from their expertise.";
+            break;
+        case 'ku':
+            languageButton.textContent = "EN";
+            menuItems[0].textContent = "Sereke";
+            menuItems[1].textContent = "Derbarê Mamosteyan";
+            menuItems[2].textContent = "Lêkolîn";
+            menuItems[3].textContent = "Têkilî";
+            welcomeSection.textContent = "Bi xêr hatin di malpera Mamosteyan de!";
+            welcomeText.textContent = "Em hûnê bi agahdariya giştî ya herî baş ya mamosteyan pêşkêş dikin, bi detayên derbarê tecrûbeyên akademîk û fêrbîn yên wan. Ji bo naskirina endamên kadrê me hûn xweş bikin û ji tecrûbeyên wan sûd werbigirin.";
+            break;
+        case 'ar':
+            languageButton.textContent = "KU";
+            menuItems[0].textContent = "الصفحة الرئيسية";
+            menuItems[1].textContent = "عن الأساتذة";
+            menuItems[2].textContent = "الأبحاث";
+            menuItems[3].textContent = "تواصل معنا";
+            welcomeSection.textContent = "مرحبًا بكم في موقع الأساتذة!";
+            welcomeText.textContent = "نحن نقدم لكم معلومات شاملة عن أفضل الأساتذة في مجالاتهم مع تفاصيل حول خبراتهم الأكاديمية والتدريسية. استمتعوا بالتعرف على أعضاء هيئة التدريس لدينا واستفيدوا من خبراتهم.";
+            break;
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    var lang = localStorage.getItem('lang') || 'ar'; // تحميل اللغة المخزنة أو العربية كافتراضي
+    document.documentElement.lang = lang; // تعيين اللغة للوثيقة
+    updateLanguageUI(lang); // تحديث الواجهة حسب اللغة المختارة
+});
+
+
 
         function sendMessage() {
             const chatBox = document.getElementById('chatBox');
