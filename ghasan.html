@@ -123,7 +123,8 @@
             background-color: #005f99;
         }
                 /* استعلامات الوسائط للأجهزة المحمولة */
-                @media (max-width: 650px) {
+              /* استعلامات الوسائط للأجهزة المحمولة */
+        @media (max-width: 650px) {
             .robot-animation-right {
                 right: 20px;
                 top: 30px;
@@ -151,16 +152,16 @@
         }
         @media (max-width: 450px) {
             .robot-animation-right {
-                right: 2px;
-                top: 95px;
-                width: 110px;
-                height: 110px;
+                right: 1px !important;
+                top: 85px !important;
+                width: 110px !important;
+                height: 100px;
             }
             .robot-animation-left {
-                left: 2px;
-                top: 100px;
-                width: 100px;
-                height: 100px;
+                left: 1px !important;
+                top: 85px !important;
+                width: 120px !important;
+                height: 120px;
             }
             .professor-img {
                 width: 155px;
@@ -252,6 +253,25 @@
             width: 80px;
             height: 80px;
         }
+        /* الروبوت المتحرك على اليسار */
+        .robot-animation-left {
+            position: absolute;
+            top: 50px;
+            left: 30px;
+            width: 170px;
+            height: 170px;
+            z-index: 2;
+        }
+
+        /* الروبوت المتحرك على اليمين */
+        .robot-animation-right {
+            position: absolute;
+            top: 50px;
+            right: 30px;
+            width: 170px;
+            height: 170px;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -259,6 +279,14 @@
     <div class="info-card">
         <div class="matrix-rain-background" id="matrix-background">
             <!-- Matrix rain effect will be generated here -->
+        </div>
+        <div class="robot-animation-left">
+            <dotlottie-player src="https://lottie.host/cd37d98c-d4f5-406e-b344-007abbaa8bb9/WPaGT0cYr8.json" background="transparent" speed="1"  loop autoplay></dotlottie-player>
+        </div>
+
+        <!-- الروبوت المتحرك على اليمين -->
+        <div class="robot-animation-right">
+            <dotlottie-player src="https://lottie.host/1c83d634-ec70-42ac-80a2-7f05b4a27057/JdYajv6c0L.json" background="transparent" speed="1"  loop autoplay></dotlottie-player>
         </div>
 
         <!-- صورة الأستاذ -->
@@ -278,6 +306,9 @@
         <div class="info-section">
             <h3>Years of experience</h3>
             <p><b>18 Years</b> of teaching and research in the field of <b>Cloud Computing, Computer Network, Network Technologies, Information Security Technology.</b></p>
+        </div>
+        <div>
+            <img src="kisspng-cisco-systems-wireless-access-points-computer-netw-networking-hardware-5b1bac40e9e414.097427201528540224958.png" alt="cisco" style="width: 80px;">
         </div>
 
         <!-- قسم الأبحاث والمنشورات -->
@@ -345,6 +376,7 @@
             createMatrixColumn();
         }
     </script>
+     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 
 </body>
 </html>

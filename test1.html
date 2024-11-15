@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شبكة بتأثير النبضة الكهربائية</title>
+    <title>معلومات الأستاذ</title>
     <style>
         * {
             margin: 0;
@@ -12,138 +12,153 @@
         }
 
         body {
-            background-color: #1a1a1a; /* خلفية داكنة */
-            overflow: hidden;
+            background-color: #f3f4f6;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-        }
-
-        .network-container {
+            padding: 20px;
             position: relative;
-            width: 100vw;
-            height: 100vh;
         }
 
-        /* تصميم العقد */
-        .node {
+        .info-card {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px 5px #0077b6;
+            text-align: center;
+            z-index: 2;
+        }
+
+        /* خلفية الشبكة المتحركة */
+        .network-background {
             position: absolute;
-            width: 15px;
-            height: 15px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 220px;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* نقاط الشبكة */
+        .node {
+            width: 10px;
+            height: 10px;
             background-color: #00b4d8;
             border-radius: 50%;
+            position: absolute;
         }
 
-        /* تصميم الخطوط بين العقد */
+        /* خطوط الشبكة */
         .line {
             position: absolute;
             width: 2px;
-            background-color: rgba(0, 119, 182, 0.3);
-            transform-origin: top left;
+            background-color: rgba(0, 150, 255, 0.6);
+            z-index: 1;
         }
 
-        /* تأثير النبضة الكهربائية */
-        .pulse {
-            position: absolute;
+        /* حركة إشارات الشبكة */
+        .signal {
             width: 10px;
             height: 10px;
+            background-color: #00cfff;
             border-radius: 50%;
-            background-color: #ffcc00;
-            opacity: 0.8;
-            animation: pulseEffect 1s ease-out forwards;
+            position: absolute;
+            animation: moveSignal 4s infinite;
+            z-index: 2;
         }
 
-        @keyframes pulseEffect {
+        /* حركة الإشارة بين العقد */
+        @keyframes moveSignal {
             0% {
-                opacity: 1;
-                transform: scale(1);
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(200px, 100px); /* انتقال بين النقاط */
             }
             100% {
-                opacity: 0;
-                transform: scale(3);
+                transform: translate(0, 0);
             }
+        }
+
+        .professor-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid #0077b6;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #af9a00;
+            margin-bottom: 10px;
+            z-index: 1;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #333;
+            z-index: 1;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0077b6;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 1;
+        }
+
+        .btn-back:hover {
+            background-color: #005f99;
         }
     </style>
 </head>
 <body>
 
-    <div class="network-container" id="networkContainer"></div>
+    <div class="info-card">
+        <div class="network-background">
+            <!-- إضافة نقاط الشبكة -->
+            <div class="node" style="top: 10%; left: 10%;"></div>
+            <div class="node" style="top: 50%; left: 30%;"></div>
+            <div class="node" style="top: 80%; left: 60%;"></div>
+            <div class="node" style="top: 20%; left: 70%;"></div>
+            <div class="node" style="top: 60%; left: 90%;"></div>
 
-    <script>
-        const networkContainer = document.getElementById('networkContainer');
-        const nodes = [];
+            <!-- إضافة خطوط بين النقاط -->
+            <div class="line" style="top: 10%; left: 10%; height: 40%; transform: rotate(45deg);"></div>
+            <div class="line" style="top: 50%; left: 30%; height: 30%; transform: rotate(-30deg);"></div>
+            <div class="line" style="top: 80%; left: 60%; height: 20%; transform: rotate(60deg);"></div>
 
-        // إنشاء العقد وتوزيعها عشوائيًا
-        function createNode(x, y) {
-            const node = document.createElement('div');
-            node.classList.add('node');
-            node.style.left = `${x}px`;
-            node.style.top = `${y}px`;
-            networkContainer.appendChild(node);
-            nodes.push({ element: node, x, y });
-        }
+            <!-- إضافة الإشارة المتحركة -->
+            <div class="signal" style="top: 10%; left: 10%;"></div>
+        </div>
 
-        // توليد العقد عشوائيًا
-        for (let i = 0; i < 8; i++) {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            createNode(x, y);
-        }
+        <!-- صورة الأستاذ -->
+        <img src="Adil-Hussain-Mohammed-200x200.jpg" alt="صورة الأستاذ" class="professor-img">
 
-        // إنشاء خط بين عقدتين
-        function createLine(x1, y1, x2, y2) {
-            const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-            const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
-            const line = document.createElement('div');
-            line.classList.add('line');
-            line.style.width = `${length}px`;
-            line.style.transform = `rotate(${angle}deg)`;
-            line.style.left = `${x1}px`;
-            line.style.top = `${y1}px`;
-            networkContainer.appendChild(line);
-        }
+        <!-- الاسم والتخصص -->
+        <h2><b>Adil Hussein Mohammed</b></h2>
+        <p>Specialization: Communication Engineering</p>
 
-        // توصيل العقد بخطوط
-        nodes.forEach((node, index) => {
-            if (index < nodes.length - 1) {
-                createLine(node.x, node.y, nodes[index + 1].x, nodes[index + 1].y);
-            }
-        });
-
-        // إنشاء نبضة كهربائية بين عقدتين
-        function createPulse(x1, y1, x2, y2) {
-            const pulse = document.createElement('div');
-            pulse.classList.add('pulse');
-            pulse.style.left = `${x1}px`;
-            pulse.style.top = `${y1}px`;
-
-            // حساب انتقال النبضة نحو العقدة الهدف
-            const deltaX = x2 - x1;
-            const deltaY = y2 - y1;
-            pulse.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-
-            networkContainer.appendChild(pulse);
-
-            // إزالة النبضة بعد انتهاء التأثير
-            setTimeout(() => {
-                pulse.remove();
-            }, 1000);
-        }
-
-        // إرسال نبضة كهربائية بين العقد بشكل دوري
-        function sendElectricPulse() {
-            nodes.forEach((node, index) => {
-                setTimeout(() => {
-                    const targetNode = nodes[(index + 1) % nodes.length];
-                    createPulse(node.x, node.y, targetNode.x, targetNode.y);
-                }, index * 500);
-            });
-        }
-
-        // بدء تشغيل النبضة الكهربائية المتكررة
-        setInterval(sendElectricPulse, 2000);
-    </script>
+        <!-- زر العودة -->
+        <a href="Home.html" class="btn-back">Return back to the home page</a>
+    </div>
 
 </body>
 </html>
