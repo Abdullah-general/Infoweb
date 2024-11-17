@@ -448,7 +448,7 @@
         position: relative;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         width: 80%;
-        max-width: 900px;
+        max-width: 1100px;
         overflow: hidden;
         animation: fadeIn 2s ease-out;
     }
@@ -462,7 +462,7 @@
         right: 0;
         bottom: 0;
         z-index: -1;
-        background: linear-gradient(135deg, #ff8c00, #ff0080, #40e0d0, #8a2be2);
+        background: linear-gradient(135deg, #ff8c00, #ff0080, #40e0d0, #892be2);
         background-size: 300% 300%;
         animation: gradientBorder 6s infinite;
         border-radius: 20px;
@@ -481,14 +481,12 @@
         height: auto;
         margin-bottom: 20px;
         border-radius: 50%;
-        border: 3px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .university-logo:hover {
         transform: scale(1.1);
-        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5);
+        
     }
 
     /* Description Text */
@@ -501,6 +499,7 @@
         margin-top: 15px;
         animation: fadeIn 1.5s ease-out;
     }
+    
 
     /* Fade-in animation */
     @keyframes fadeIn {
@@ -726,7 +725,7 @@
                     <br/>
                     <img src="photo_2024-11-13_11-18-31.jpg" alt=" Dr.Ghassan" class="professor-img">
                     <br/>
-                    <h4>Ghassan A. QasMarrogy</h4><br>
+                    <h4>Asst.Prof.Ghassan A.Q</h4><br>
                     <p>Wireless Networks and Security </p>
                 </div>
                 <div class="card-back">
@@ -760,16 +759,30 @@
         <div class="professor-card" onclick="flipCard(event, this)">
             <div class="inner-card">
                 <div class="card-front">
-                    <img src="https://via.placeholder.com/80" alt="الأستاذ" class="professor-img">
-                    <h2>د. منال إبراهيم</h2>
-                    <p>التخصص: علم الأحياء</p>
+                    <br/>
+                    <img src="firas.jpg" alt=" Dr.Firas" class="professor-img">
+                    <br/>
+                    <h4>Asst.lect.Firas Muhammad.Z</h4><br>
+                    <p>Satellite Communication </p>
                 </div>
                 <div class="card-back">
-                    <h3>معلومات إضافية</h3>
-                    <p>الشهادات: دكتوراه في علم الوراثة</p>
-                    <p>الخبرة: 7 سنوات</p>
-                    <p>البريد الإلكتروني: manal@example.com</p>
-                    <div class="rating" data-id="6">
+                    <h3>Additional information</h3>
+                    <br>
+                    <p>Degrees: Master’s</p>
+                    <p>Experience: 24 Years</p>
+                    <br>
+                    <h4>subjects teaching :</h4>
+                    <br>
+                    <ul >
+                        <li>Satellite Communications</li>
+                        <li>System Analysis</li>
+                        <li>Communication Skills</li>
+                        <li>Discrete Structure</li>
+                        <li>ect...</li>
+                    </ul>
+                    <a href="firas.html" class="more-btn">More</a>
+                    
+                    <div class="rating" data-id="1">
                         <span class="star" data-value="1">&#9733;</span>
                         <span class="star" data-value="2">&#9733;</span>
                         <span class="star" data-value="3">&#9733;</span>
@@ -778,103 +791,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- البطاقة 7 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <img src="https://via.placeholder.com/80" alt="الأستاذ" class="professor-img">
-                    <h2>د. يوسف علي</h2>
-                    <p>التخصص: الهندسة الكهربائية</p>
-                </div>
-                <div class="card-back">
-                    <h3>معلومات إضافية</h3>
-                    <p>الشهادات: دكتوراه في الأنظمة الكهربائية</p>
-                    <p>الخبرة: 15 سنة</p>
-                    <p>البريد الإلكتروني: yusuf@example.com</p>
-                    <div class="rating" data-id="7">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- البطاقة 8 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <img src="https://via.placeholder.com/80" alt="الأستاذ" class="professor-img">
-                    <h2>د. سارة عمر</h2>
-                    <p>التخصص: علم النفس</p>
-                </div>
-                <div class="card-back">
-                    <h3>معلومات إضافية</h3>
-                    <p>الشهادات: دكتوراه في علم النفس التربوي</p>
-                    <p>الخبرة: 10 سنوات</p>
-                    <p>البريد الإلكتروني: sara@example.com</p>
-                    <div class="rating" data-id="8">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- البطاقة 9 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <img src="https://via.placeholder.com/80" alt="الأستاذ" class="professor-img">
-                    <h2>د. خالد سمير</h2>
-                    <p>التخصص: الإدارة العامة</p>
-                </div>
-                <div class="card-back">
-                    <h3>معلومات إضافية</h3>
-                    <p>الشهادات: دكتوراه في الإدارة الحكومية</p>
-                    <p>الخبرة: 14 سنة</p>
-                    <p>البريد الإلكتروني: khaled@example.com</p>
-                    <div class="rating" data-id="9">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- البطاقة 10 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <img src="https://via.placeholder.com/80" alt="الأستاذ" class="professor-img">
-                    <h2>د. رانيا عبد الله</h2>
-                    <p>التخصص: الهندسة المدنية</p>
-                </div>
-                <div class="card-back">
-                    <h3>معلومات إضافية</h3>
-                    <p>الشهادات: دكتوراه في الإنشاءات الهندسية</p>
-                    <p>الخبرة: 13 سنة</p>
-                    <p>البريد الإلكتروني: rania@example.com</p>
-                    <div class="rating" data-id="10">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div>      
     </div>
 
     <!-- قسم الذكاء الاصطناعي -->
@@ -1008,4 +925,3 @@ function performSearch(event) {
     </script>
 </body>
 </html>
--
