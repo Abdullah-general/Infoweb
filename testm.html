@@ -3,911 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بطاقات الأساتذة</title>
+    <title>محاكاة الأقمار الصناعية مع كوكب منحني</title>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            background: black;
         }
-
-        body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: #fff;
-            min-height: 100vh;
-            padding-bottom: 20px;
-            overflow-x: hidden;
+        canvas {
+            display: block;
         }
-
-        /* زر تغيير اللغة */
-        .language-toggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, #ff006e, #3a86ff, #8338ec, #ffbe0b);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            z-index: 1000; /* الحفاظ عليه مرئيًا دائمًا */
-            animation: bgAnimation 8s ease infinite;
-        }
-
-        .language-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        @keyframes bgAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* القائمة العلوية */
-        nav {
-            width: 100%;
-            background-color: #3a0ca3;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav ul li {
-            font-size: 1.2rem;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #f3f4f6;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        nav ul li a:hover {
-            background-color: #0077b6;
-            transform: scale(1.05);
-        }
-
-        h1 {
-            margin: 20px 0;
-            color: #aaccff;
-            font-size: 2.5rem;
-            text-align: center;
-        }
-
-        /* ترحيب بالزائرين */
-        .welcome-section {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 20px 40px rgba(0, 119, 182, 0.5);
-        }
-
-        /* تنسيق النص ليكون متناسق مع ألوان الظل */
-        .welcome-section h2 {
-            font-size: 2rem;
-            background: linear-gradient(135deg, #ff006e, #3a86ff, #8338ec, #ffbe0b);
-            background-size: 300% 300%;
-            animation: textAnimation 8s ease infinite;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        @keyframes textAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .welcome-section p {
-            font-size: 1.1rem;
-            color: #b2b2b2;
-        }
-
-        /* البطاقات */
-        .container {
-            display: flex;
-            justify-content: center;
-            gap: 50px; /* مسافة بين البطاقات */
-            flex-wrap: wrap;
-            padding: 20px;
-        }
-
-        .professor-card {
-            width: 270px;
-            height: 350px;
-            position: relative;
-            perspective: 1000px;
-            margin-bottom: 50px; /* مسافة أكبر بين الصفوف */
-        }
-
-        .professor-card::before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(135deg, #ffffff, #e6f7ff, #cceeff, #99ccff, #66b2ff, #3399ff, #0077cc);
-            background-size: 600% 600%;
-            animation: shadowAnimation 10s ease infinite;
-            filter: blur(10px);
-            opacity: 0.75;
-            z-index: -1;
-        }
-
-        @keyframes shadowAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .professor-card .inner-card {
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            position: relative;
-        }
-
-        .professor-card.clicked .inner-card {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            backface-visibility: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #121212, #24243e);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card-front {
-            padding: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .professor-img {
-            margin-top: -35px;
-
-    width: 100%;
-    height: 70%; /* الصورة تغطي النصف العلوي */
-    object-fit: cover; /* لملء المساحة المخصصة للصورة */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border: #00ffdd solid 2px;    
-}
-
-        .card-back {
-            background-color: rgba(0, 0, 0, 0.9);
-            color: white;
-            transform: rotateY(180deg);
-        }
-
-        .rating {
-            direction: rtl;
-            unicode-bidi: bidi-override;
-            font-size: 1.8rem;
-            color: #ddd;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .rating .star:hover, .rating .star:hover ~ .star {
-            color: gold;
-        }
-
-        /* AI Section */
-        .ai-section {
-            margin: 50px auto;
-            padding: 30px;
-            width: 80%;
-            background: linear-gradient(135deg, #3a86ff, #8338ec, #ffbe0b, #3a0ca3);
-            background-size: 400% 400%;
-            animation: aiColorChange 8s ease infinite;
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        .ai-section h2 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .ai-section p {
-            font-size: 1.1rem;
-            color: #fff;
-        }
-
-        .chat-box {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #121212;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: left;
-            color: #fff;
-            height: 300px;
-            overflow-y: scroll;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .chat-input {
-            width: 80%;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            margin-top: 10px;
-            font-size: 1rem;
-            background-color: #f0f0f0;
-            color: #000;
-        }
-
-        .chat-button {
-            padding: 10px 20px;
-            background-color: #0077b6;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .chat-button:hover {
-            background-color: #005f99;
-        }
-
-        @keyframes aiColorChange {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* الرسائل */
-        .message {
-            margin-bottom: 10px;
-        }
-
-        .message.user {
-            text-align: right;
-            color: #fff;
-        }
-
-        .message.ai {
-            text-align: left;
-            color: #00ffdd;
-        }
-        .more-btn {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 8px 16px;
-    background-color: #0077b6;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.more-btn:hover {
-    background-color: #005f99;
-}
-/* إخفاء القائمة الأصلية وعرض الزر عند العرض على الشاشات الصغيرة */
-@media (max-width: 768px) {
-    nav ul {
-        display: none; /* إخفاء القائمة الأفقية */
-    }
-
-    .hamburger-menu {
-        display: block;
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        cursor: pointer;
-        z-index: 1000;
-    }
-
-    .hamburger-menu div {
-        width: 25px;
-        height: 3px;
-        background-color: #fff;
-        margin: 5px 0;
-        transition: 0.4s;
-    }
-
-    /* إظهار القائمة المنسدلة */
-    .menu-dropdown {
-    display: none; /* إخفاء القائمة في البداية */
-    position: fixed;
-    top: 60px;
-    right: 0;
-    background-color: #3a0ca3;
-    width: 100%;
-    text-align: center;
-    padding: 15px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    z-index: 9999; /* رفع قيمة z-index لضمان ظهور القائمة في المقدمة */
-}
-
-
-    .menu-dropdown a {
-        display: block;
-        padding: 10px;
-        color: #f3f4f6;
-        text-decoration: none;
-        font-size: 1.2rem;
-        border-bottom: 1px solid #555;
-    }
-
-    .menu-dropdown a:hover {
-        background-color: #0077b6;
-    }
-}
-/* Search Box Container */
-.search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-/* Search Form */
-.search-form {
-    display: flex;
-    align-items: center;
-    background-color: #e0f0ff;
-    border: 2px solid #0077b6;
-    border-radius: 25px;
-    padding: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Search Input */
-.search-input {
-    border: none;
-    background: none;
-    color: #333;
-    font-size: 1rem;
-    padding: 10px;
-    outline: none;
-    width: 200px;
-    border-radius: 25px 0 0 25px;
-    text-align: right; /* Align text to the right for Arabic */
-}
-
-/* Placeholder Styling */
-.search-input::placeholder {
-    color: #888;
-    font-style: italic;
-}
-
-/* Search Button */
-.search-button {
-    background-color: #0077b6;
-    color: #fff;
-    border: none;
-    border-radius: 0 25px 25px 0;
-    cursor: pointer;
-    padding: 10px 15px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.search-button:hover {
-    background-color: #005f99;
-}
-
-  /* University Info Section */
-  .university-info {
-        text-align: center;
-        margin: 30px auto;
-        padding: 25px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
-        border-radius: 20px;
-        border: 2px solid transparent;
-        background-clip: padding-box;
-        position: relative;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        width: 80%;
-        max-width: 1100px;
-        overflow: hidden;
-        animation: fadeIn 2s ease-out;
-    }
-
-    /* Add glowing gradient border */
-    .university-info::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
-        background: linear-gradient(135deg, #ff8c00, #ff0080, #40e0d0, #892be2);
-        background-size: 300% 300%;
-        animation: gradientBorder 6s infinite;
-        border-radius: 20px;
-        filter: blur(10px);
-    }
-
-    @keyframes gradientBorder {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    /* Logo Styling */
-    .university-logo {
-        width: 140px; /* Slightly larger logo */
-        height: auto;
-        margin-bottom: 20px;
-        border-radius: 50%;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .university-logo:hover {
-        transform: scale(1.1);
-        
-    }
-
-    /* Description Text */
-    .university-description {
-        font-size: 1.4rem;
-        color: #f5f5f5;
-        line-height: 1.8;
-        direction: rtl; /* Right-to-left alignment for Arabic text */
-        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-        margin-top: 15px;
-        animation: fadeIn 1.5s ease-out;
-    }
-    
-
-    /* Fade-in animation */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-
-
     </style>
 </head>
 <body>
-    <!-- زر تغيير اللغة -->
-    <button class="language-toggle" onclick="toggleLanguage()">EN</button>
-
-    <!-- القائمة العلوية -->
-    <nav>
-        <ul id="menu">
-            <li><a href="home.html">الصفحة الرئيسية</a></li>
-            <li><a href="about-us.html">معلومات عنا</a></li>
-            <li><a href="about-uni.html">معلومات عن الجامعة</a></li>
-            <li><a href="contact.html">تواصل معنا</a></li>
-        </ul>
-    </nav>
-    <!-- زر Hamburger Menu للشاشات الصغيرة -->
-<div class="hamburger-menu" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
-
-<!-- القائمة المنسدلة -->
-<div class="menu-dropdown" id="dropdownMenu" style="display: none;">
-    <a href="#">الصفحة الرئيسية</a>
-    <a href="#">عن الأساتذة</a>
-    <a href="#">الأبحاث</a>
-    <a href="#">تواصل معنا</a>
-</div>
-<!-- University Logo and Description -->
-<div class="university-info">
-    <img src="cihan-logo.png" alt="شعار جامعة جيهان - أربيل" class="university-logo">
-    <p class="university-description">
-        جامعة جيهان - أربيل هي إحدى الجامعات الخاصة الرائدة في إقليم كردستان العراق. 
-        تسعى الجامعة إلى التميز الأكاديمي من خلال تقديم برامج تعليمية متنوعة تهدف إلى 
-        تزويد الطلاب بالمعرفة والمهارات اللازمة للنجاح في حياتهم المهنية.
-    </p>
-</div>
-
-    <!-- ترحيب بالزائرين -->
-    <div class="welcome-section">
-        <h2>مرحبًا بكم في موقع الأساتذة!</h2>
-        <p>نحن نقدم لكم معلومات شاملة عن أفضل الأساتذة في مجالاتهم مع تفاصيل حول خبراتهم الأكاديمية والتدريسية. استمتعوا بالتعرف على أعضاء هيئة التدريس لدينا واستفيدوا من خبراتهم.</p>
-    </div>
-
-    <div class="search-container">
-        <form class="search-form" onsubmit="performSearch(event)">
-            <input type="text" id="searchBox" class="search-input" placeholder="ابحث عن الأستاذ...">
-            <button type="submit" class="search-button">بحث</button>
-        </form>
-    </div>
-    
-
-    <!-- البطاقات -->
-    <div class="container" id="cards">
-        <!-- البطاقة 1 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <br/>
-                    <img src="Adil-Hussain-Mohammed-200x200.jpg" alt="dr.adil" class="professor-img">
-                    <br/>
-                    <h3>Asst.Lect. Adil Al-Dalowi</h3><br>
-                    <p>Communication Engineering</p>
-                </div>
-                <div class="card-back">
-                    <h3>Additional information</h3>
-                    <br>
-                    <p>Degrees: Master’s</p>
-                    <p>Experience: 35 years</p>
-                    <br>
-                    <h4>subjects teaching :</h4>
-                    <br>
-                    <ul >
-                        <li>Data visualization</li>
-                        <li>Artificial Intelligent</li>
-                        <li>embedded system</li>
-                        <li>Robotics and IOT</li>
-                    </ul>
-                    <a href="adil.html" class="more-btn">More</a>
-                    
-                    <div class="rating" data-id="1">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- البطاقة 2 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <br/>
-                    <img src="IMG_4181.JPG" alt="prof mohammed" class="professor-img">
-                    <br/>
-                    <h4>Asst.Prof.Mohammad A.A</h4><br>
-                    <p>CS & AI</p>
-                </div>
-                <div class="card-back">
-                    <h3>Additional information</h3>
-                    <br>
-                    <p>Degrees: Assistant Professor</p>
-                    <p>Experience: 18 years</p>
-                    <br>
-                    <h4>subjects teaching :</h4>
-                    <br>
-                    <ul >
-                        <li>Machine Learning</li>
-                        <li> Database systems</li>
-                        <li> Distributed Database systems</li>
-                        <li> Web Design & Development</li>
-                        <li>etc...</li>
-                    </ul>
-                    <a href="mohamed.html" class="more-btn">More</a>
-                    
-                    <div class="rating" data-id="1">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- البطاقة 3 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <br/>
-                    <img src="drfatima.jfif" alt="Dr Fatima" class="professor-img">
-                    <br/>
-                    <h4>Dr. FATIMATELBATOUL M.H</h4><br>
-                    <p>Data Analysis and AI </p>
-                </div>
-                <div class="card-back">
-                    <h3>Additional information</h3>
-                    <br>
-                    <p>Degrees: Ph.D</p>
-                    <p>Experience: 7 Years</p>
-                    <br>
-                    <h4>subjects teaching :</h4>
-                    <br>
-                    <ul >
-                        <li>Big Data</li>
-                        <li>Research Methods</li>
-                        <li>Image Processing & Multimedia</li>
-                    </ul>
-                    <a href="fatima.html" class="more-btn">More</a>
-                    
-                    <div class="rating" data-id="1">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- البطاقة 4 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <br/>
-                    <img src="Yazan-Saif-Aldeen-Mahmood.jpg" alt="Dr yazen" class="professor-img">
-                    <br/>
-                    <h4>Mr. Yazen Saifuldeen M.</h4><br>
-                    <p>Data Analysis and AI </p>
-                </div>
-                <div class="card-back">
-                    <h3>Additional information</h3>
-                    <br>
-                    <p>Degrees: Master’s</p>
-                    <p>Experience: 13 Years</p>
-                    <br>
-                    <h4>subjects teaching :</h4>
-                    <br>
-                    <ul >
-                        <li>data structures</li>
-                        <li>calculus</li>
-                        <li>mobile communication</li>
-                        <li>algorithm fundamentals...</li>
-                    </ul>
-                    <a href="yazen.html" class="more-btn">More</a>
-                    
-                    <div class="rating" data-id="1">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- البطاقة 5 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <br/>
-                    <img src="photo_2024-11-13_11-18-31.jpg" alt=" Dr.Ghassan" class="professor-img">
-                    <br/>
-                    <h4>Ghassan A. QasMarrogy</h4><br>
-                    <p>Wireless Networks and Security </p>
-                </div>
-                <div class="card-back">
-                    <h3>Additional information</h3>
-                    <br>
-                    <p>Degrees: Assistant Professor</p>
-                    <p>Experience: 18 Years</p>
-                    <br>
-                    <h4>subjects teaching :</h4>
-                    <br>
-                    <ul >
-                        <li>Cloud Computing </li>
-                        <li>Computer Network</li>
-                        <li>Network Technologies</li>
-                        <li>Information Security Technology</li>
-                    </ul>
-                    <a href="ghasan.html" class="more-btn">More</a>
-                    
-                    <div class="rating" data-id="1">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- البطاقة 6 -->
-        <div class="professor-card" onclick="flipCard(event, this)">
-            <div class="inner-card">
-                <div class="card-front">
-                    <img src="https://via.placeholder.com/80" alt="الأستاذ" class="professor-img">
-                    <h2>د. منال إبراهيم</h2>
-                    <p>التخصص: علم الأحياء</p>
-                </div>
-                <div class="card-back">
-                    <h3>معلومات إضافية</h3>
-                    <p>الشهادات: دكتوراه في علم الوراثة</p>
-                    <p>الخبرة: 7 سنوات</p>
-                    <p>البريد الإلكتروني: manal@example.com</p>
-                    <div class="rating" data-id="6">
-                        <span class="star" data-value="1">&#9733;</span>
-                        <span class="star" data-value="2">&#9733;</span>
-                        <span class="star" data-value="3">&#9733;</span>
-                        <span class="star" data-value="4">&#9733;</span>
-                        <span class="star" data-value="5">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div>      
-    </div>
-
-    <!-- قسم الذكاء الاصطناعي -->
-    <div class="ai-section">
-        <h2>الذكاء الاصطناعي</h2>
-        <p>هل لديك استفسارات حول الأساتذة أو الموقع؟ استخدم الذكاء الاصطناعي للتفاعل والحصول على إجابات فورية!</p>
-        <div class="chat-box" id="chatBox">
-            <!-- الرسائل ستظهر هنا -->
-        </div>
-        <input type="text" class="chat-input" id="chatInput" placeholder="اكتب سؤالك هنا...">
-        <button class="chat-button" onclick="sendMessage()">إرسال</button>
-    </div>
-
+    <canvas id="simulationCanvas" width="1600" height="1000"></canvas>
     <script>
-        function flipCard(event, card) {
-            if (!event.target.classList.contains('star')) {
-                card.classList.toggle('clicked');
+        const canvas = document.getElementById("simulationCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const earth = { x: 800, y: 1500, radius: 1000 }; // موقع الأرض أسفل الشاشة
+        const satellites = [
+            { x: 400, y: 300, name: "CALIPSO", color: "purple", waves: [] },
+            { x: 700, y: 270, name: "CloudSat", color: "red", waves: [] },
+            { x: 900, y: 240, name: "Aqua", color: "yellow", waves: [] },
+            { x: 1200, y: 270, name: "GCOM-W1", color: "blue", waves: [] },
+            { x: 1400, y: 300, name: "OCO-2", color: "green", waves: [] },
+        ];
+
+        // توليد النجوم العشوائية
+        const stars = [];
+        for (let i = 0; i < 300; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 3,
+                opacity: Math.random()
+            });
+        }
+
+        // رسم النجوم
+        function drawStars() {
+            stars.forEach(star => {
+                ctx.globalAlpha = star.opacity;
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath();
+            });
+            ctx.globalAlpha = 1;
+        }
+
+        // رسم القوس العلوي للأرض
+        function drawEarth() {
+            // رسم المحيطات (قوس الأرض)
+            ctx.beginPath();
+            ctx.arc(earth.x, earth.y, earth.radius, Math.PI * 1.2, Math.PI * 1.8);
+            const gradient = ctx.createRadialGradient(earth.x, earth.y, earth.radius * 0.8, earth.x, earth.y, earth.radius);
+            gradient.addColorStop(0, "#004080");
+            gradient.addColorStop(1, "black");
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            ctx.closePath();
+
+            // إضافة تأثير الغلاف الجوي
+            ctx.beginPath();
+            ctx.arc(earth.x, earth.y, earth.radius, Math.PI * 1.2, Math.PI * 1.8);
+            ctx.strokeStyle = "rgba(135, 206, 250, 0.5)";
+            ctx.lineWidth = 15;
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        // رسم قمر صناعي
+        function drawSatellite(satellite) {
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.arc(satellite.x, satellite.y, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.fillStyle = "#fff";
+            ctx.font = "16px Arial";
+            ctx.fillText(satellite.name, satellite.x - 30, satellite.y - 20);
+        }
+
+        // رسم الموجات الدائرية
+        function drawWaves(satellite) {
+            // إزالة الموجات التي تجاوزت حجم معين
+            satellite.waves = satellite.waves.filter(wave => wave.radius < 900);
+
+            // تحديث ورسم الموجات
+            satellite.waves.forEach(wave => {
+                ctx.beginPath();
+                ctx.arc(satellite.x, satellite.y, wave.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(${wave.color[0]}, ${wave.color[1]}, ${wave.color[2]}, ${wave.opacity})`;
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                ctx.closePath();
+
+                // توسيع الموجة وتقليل الشفافية
+                wave.radius += 3;
+                wave.opacity -= 0.005;
+            });
+
+            // إضافة موجة جديدة بشكل دوري
+            if (Math.random() < 0.03) {
+                satellite.waves.push({
+                    radius: 0,
+                    opacity: 1,
+                    color: satellite.color === "purple" ? [128, 0, 128] :
+                           satellite.color === "red" ? [255, 0, 0] :
+                           satellite.color === "yellow" ? [255, 255, 0] :
+                           satellite.color === "blue" ? [0, 0, 255] : [0, 128, 0]
+                });
             }
         }
 
-        document.querySelectorAll('.rating').forEach(rating => {
-            const stars = rating.querySelectorAll('.star');
-            stars.forEach(star => {
-                star.addEventListener('click', function(event) {
-                    const value = this.getAttribute('data-value');
-                    stars.forEach(s => {
-                        s.style.color = s.getAttribute('data-value') <= value ? 'gold' : '#ddd';
-                    });
-                    event.stopPropagation(); // منع قلب البطاقة عند النقر على التقييم
-                });
+        // تحديث الرسوم
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // رسم النجوم
+            drawStars();
+
+            // رسم الأرض
+            drawEarth();
+
+            // رسم الأقمار الصناعية والموجات الدائرية
+            satellites.forEach(satellite => {
+                drawSatellite(satellite);
+                drawWaves(satellite);
             });
-        });
 
-        function toggleLanguage() {
-    var currentLang = document.documentElement.lang;
-    var newLang = currentLang === "ar" ? "en" : (currentLang === "en" ? "ku" : "ar");
-    document.documentElement.lang = newLang;
-    localStorage.setItem('lang', newLang); // تخزين اللغة الجديدة في localStorage
-    window.location.reload(); // إعادة تحميل الصفحة لتطبيق التغيير
-}
-function updateLanguageUI(lang) {
-    var languageButton = document.querySelector('.language-toggle');
-    var menuItems = document.querySelectorAll("nav ul li a");
-    var welcomeSection = document.querySelector(".welcome-section h2");
-    var welcomeText = document.querySelector(".welcome-section p");
-
-    switch(lang) {
-        case 'en':
-            languageButton.textContent = "AR";
-            menuItems[0].textContent = "Home";
-            menuItems[1].textContent = "About Professors";
-            menuItems[2].textContent = "Research";
-            menuItems[3].textContent = "Contact Us";
-            welcomeSection.textContent = "Welcome to the Professors' Website!";
-            welcomeText.textContent = "We provide you with comprehensive information about the best professors in their fields, along with details about their academic and teaching experience. Enjoy getting to know our faculty members and benefit from their expertise.";
-            break;
-        case 'ku':
-            languageButton.textContent = "EN";
-            menuItems[0].textContent = "Sereke";
-            menuItems[1].textContent = "Derbarê Mamosteyan";
-            menuItems[2].textContent = "Lêkolîn";
-            menuItems[3].textContent = "Têkilî";
-            welcomeSection.textContent = "Bi xêr hatin di malpera Mamosteyan de!";
-            welcomeText.textContent = "Em hûnê bi agahdariya giştî ya herî baş ya mamosteyan pêşkêş dikin, bi detayên derbarê tecrûbeyên akademîk û fêrbîn yên wan. Ji bo naskirina endamên kadrê me hûn xweş bikin û ji tecrûbeyên wan sûd werbigirin.";
-            break;
-        case 'ar':
-            languageButton.textContent = "KU";
-            menuItems[0].textContent = "الصفحة الرئيسية";
-            menuItems[1].textContent = "عن الأساتذة";
-            menuItems[2].textContent = "الأبحاث";
-            menuItems[3].textContent = "تواصل معنا";
-            welcomeSection.textContent = "مرحبًا بكم في موقع الأساتذة!";
-            welcomeText.textContent = "نحن نقدم لكم معلومات شاملة عن أفضل الأساتذة في مجالاتهم مع تفاصيل حول خبراتهم الأكاديمية والتدريسية. استمتعوا بالتعرف على أعضاء هيئة التدريس لدينا واستفيدوا من خبراتهم.";
-            break;
-    }
-}
-document.addEventListener('DOMContentLoaded', function() {
-    var lang = localStorage.getItem('lang') || 'ar'; // تحميل اللغة المخزنة أو العربية كافتراضي
-    document.documentElement.lang = lang; // تعيين اللغة للوثيقة
-    updateLanguageUI(lang); // تحديث الواجهة حسب اللغة المختارة
-});
-
-
-
-        function sendMessage() {
-            const chatBox = document.getElementById('chatBox');
-            const chatInput = document.getElementById('chatInput');
-            const userMessage = chatInput.value;
-
-            if (userMessage.trim() === "") return;
-
-            // إضافة رسالة المستخدم
-            const userMessageElem = document.createElement('div');
-            userMessageElem.classList.add('message', 'user');
-            userMessageElem.textContent = userMessage;
-            chatBox.appendChild(userMessageElem);
-
-            // إضافة رسالة الذكاء الاصطناعي (محاكاة الرد)
-            const aiMessageElem = document.createElement('div');
-            aiMessageElem.classList.add('message', 'ai');
-            aiMessageElem.textContent = "هذا رد توضيحي من النظام الذكي. يمكنك تخصيص الرد هنا باستخدام API الخاص بالذكاء الاصطناعي.";
-            chatBox.appendChild(aiMessageElem);
-
-            // تنظيف حقل الإدخال
-            chatInput.value = "";
-
-            // تمرير المحتوى تلقائيًا إلى آخر الرسائل
-            chatBox.scrollTop = chatBox.scrollHeight;
+            requestAnimationFrame(animate);
         }
-        function toggleMenu() {
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
-        dropdownMenu.style.display = "block";
-    } else {
-        dropdownMenu.style.display = "none";
-    }
-}
 
-function performSearch(event) {
-    event.preventDefault();
-    const searchQuery = document.getElementById('searchBox').value.toLowerCase();
-    const professorCards = document.querySelectorAll('.professor-card');
-
-    professorCards.forEach(card => {
-        const professorName = card.querySelector('h3, h4, h2').textContent.toLowerCase();
-        card.style.display = professorName.includes(searchQuery) ? 'block' : 'none';
-    });
-}
-
-
+        // بدء المحاكاة
+        animate();
     </script>
 </body>
 </html>
