@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, #302b63, #302b63, #24243e);
             color: #fff;
             min-height: 100vh;
             padding-bottom: 20px;
@@ -394,11 +394,17 @@
 .search-form {
     display: flex;
     align-items: center;
-    background-color: #e0f0ff;
-    border: 2px solid #0077b6;
-    border-radius: 25px;
-    padding: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f0f8ff; /* Lighter background color to make it look clean and fresh */
+    border: 2px solid #00bcd4; /* Matching border color */
+    border-radius: 50px; /* Round corners for a smooth look */
+    padding: 8px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15); /* Smooth shadow effect */
+    transition: box-shadow 0.3s ease;
+}
+
+/* Adding hover effect for the search form */
+.search-form:hover {
+    box-shadow: 0px 6px 18px rgba(0, 188, 212, 0.3); /* Slightly brighter shadow on hover */
 }
 
 /* Search Input */
@@ -407,11 +413,18 @@
     background: none;
     color: #333;
     font-size: 1rem;
-    padding: 10px;
+    padding: 12px;
     outline: none;
-    width: 200px;
-    border-radius: 25px 0 0 25px;
+    width: 250px; /* Slightly wider input */
+    border-radius: 50px 0 0 50px; /* Rounded edges to match the form */
     text-align: right; /* Align text to the right for Arabic */
+    transition: width 0.3s ease; /* Smooth expansion when focused */
+}
+
+/* On focus, the input expands slightly */
+.search-input:focus {
+    width: 300px; /* Expand the input when focused */
+    box-shadow: 0px 0px 10px rgba(0, 188, 212, 0.6); /* Add shadow on focus */
 }
 
 /* Placeholder Styling */
@@ -422,19 +435,30 @@
 
 /* Search Button */
 .search-button {
-    background-color: #0077b6;
+    background-color: #00bcd4; /* Blue-ish color matching the theme */
     color: #fff;
     border: none;
-    border-radius: 0 25px 25px 0;
+    border-radius: 0 50px 50px 0; /* Rounded right corners */
     cursor: pointer;
-    padding: 10px 15px;
+    padding: 12px 20px;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 0px 10px rgba(0, 188, 212, 0.3); /* Subtle shadow for the button */
 }
 
+/* Button hover effect */
 .search-button:hover {
-    background-color: #005f99;
+    background-color: #0097a7; /* Darker blue when hovering */
+    transform: scale(1.05); /* Slight grow effect when hovered */
 }
+
+/* Button focus effect */
+.search-button:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px 2px #00bcd4; /* Glow effect on focus */
+}
+
+
 
   /* University Info Section */
   .university-info {
@@ -512,24 +536,191 @@
             transform: translateY(0);
         }
     }
+    .styled-button {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        .styled-button:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        /* Footer styling */
+        .footer {
+            width: 100%;
+            background: linear-gradient(45deg, #202b31, #404b52, #705e70, #222424);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 1.4rem;
+            position: relative;
+            margin-top: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect for footer */
+            border-radius: 15px;
+        }
 
+        /* Animated gradient for the footer */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
 
+        /* Names typing effect from left to right */
+        .footer .programmers {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 15px;
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 4px solid rgba(255, 255, 255, 0.8); /* Simulates cursor */
+            animation: typingEffect 10s steps(50) 1s forwards, blinkCursor 0.75s step-end infinite;
+            text-align: center;
+            width: 0;
+            animation-delay: 1s; /* Delay to simulate the typing effect */
+            animation-fill-mode: forwards; /* Keep the text visible after animation completes */
+        }
+
+        /* Typing effect */
+        @keyframes typingEffect {
+            from {
+                width: 1%;
+            }
+            to {
+                width: 74%;
+            }
+        }
+
+        /* Blinking cursor */
+        @keyframes blinkCursor {
+            0%, 100% {
+                border-color: transparent;
+            }
+            50% {
+                border-color: rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        /* Footer link styling */
+        .footer a {
+            color: #d1b513;
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .footer a:hover {
+            color: #ff00b3; /* Change color on hover */
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 650px) {
+            .footer .programmers {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 15px;
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 4px solid rgba(255, 255, 255, 0.8); /* Simulates cursor */
+            animation: typingEffect 10s steps(50) 1s forwards, blinkCursor 0.75s step-end infinite;
+            text-align: center;
+            width: 0;
+            animation-delay: 1s; /* Delay to simulate the typing effect */
+            animation-fill-mode: forwards; /* Keep the text visible after animation completes */
+        }
+            .footer {
+                font-size: 1.0rem;
+            }
+        }
+        /* Styling the modal message */
+        .modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 60%;
+            max-width: 500px;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #0077b6;
+        }
+
+        .modal p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .btn-ok {
+            background-color: #0077b6;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-ok:hover {
+            background-color: #005f99;
+        }
 
     </style>
 </head>
 <body>
-    <!-- زر تغيير اللغة -->
-    
 
     <!-- القائمة العلوية -->
     <nav>
         <ul id="menu">
-            <li><a href="home.html">الصفحة الرئيسية</a></li>
-            <li><a href="about-us.html">معلومات عنا</a></li>
-            <li><a href="about-uni.html">معلومات عن الجامعة</a></li>
-            <li><a href="contact.html">تواصل معنا</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="about-uni.html">About the University</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
         </ul>
     </nav>
+    
     <!-- زر Hamburger Menu للشاشات الصغيرة -->
 <div class="hamburger-menu" onclick="toggleMenu()">
     <div></div>
@@ -539,31 +730,51 @@
 
 <!-- القائمة المنسدلة -->
 <div class="menu-dropdown" id="dropdownMenu" style="display: none;">
-    <a href="home.html">الصفحة الرئيسية</a>
-    <a href="about-us.html">معلومات عنا</a>
-    <a href="about-uni.html">معلومات عن الجامعة</a>
-    <a href="contact.html">تواصل معنا</a>
+    <a href="index.html">Home</a>
+    <a href="about-us.html">About Us</a>
+    <a href="about-uni.html">About the University</a>
+    <a href="contact.html">Contact Us</a>
 </div>
+
+<div id="google_translate_element"></div>
+
+    <!-- تحميل مكتبة Google Translate -->
+    <script src="translate.js"></script>
 <!-- University Logo and Description -->
 <div class="university-info">
     <img src="cihan-logo.png" alt="شعار جامعة جيهان - أربيل" class="university-logo">
     <p class="university-description">
-        جامعة جيهان - أربيل هي إحدى الجامعات الخاصة الرائدة في إقليم كردستان العراق. 
-        تسعى الجامعة إلى التميز الأكاديمي من خلال تقديم برامج تعليمية متنوعة تهدف إلى 
-        تزويد الطلاب بالمعرفة والمهارات اللازمة للنجاح في حياتهم المهنية.
+        Cihan University - Erbil is one of the leading private universities in the Kurdistan region of Iraq. The university strives for academic excellence by offering a variety of educational programs aimed at equipping students with the knowledge and skills necessary for success in their professional lives.
     </p>
 </div>
+<!-- Modal message -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h2>Under Construction</h2>
+        <p>This website is still under construction and is not yet complete. We are working hard to bring you the best experience!</p>
+        <button class="btn-ok" id="okBtn">OK</button>
+    </div>
+</div>
+
+<script>
+    // JavaScript to hide the modal when OK button is clicked
+    document.getElementById('okBtn').onclick = function() {
+        document.getElementById('modal').style.display = 'none';
+    }
+</script>
 
     <!-- ترحيب بالزائرين -->
     <div class="welcome-section">
-        <h2>مرحبًا بكم في موقع الأساتذة!</h2>
-        <p>نحن نقدم لكم معلومات شاملة عن أفضل الأساتذة في مجالاتهم مع تفاصيل حول خبراتهم الأكاديمية والتدريسية. استمتعوا بالتعرف على أعضاء هيئة التدريس لدينا واستفيدوا من خبراتهم.</p>
+        <h2>Welcome to Our Programming World !</h2>
+        <p>
+            We provide you with information about our department, our teachers, and our staff, and we share with you their expertise and skills. Additionally, we present our department that includes Artificial Intelligence and Programming.
+        </p>
     </div>
 
     <div class="search-container">
         <form class="search-form" onsubmit="performSearch(event)">
-            <input type="text" id="searchBox" class="search-input" placeholder="ابحث عن الأستاذ...">
-            <button type="submit" class="search-button">بحث</button>
+            <input type="text" id="searchBox" class="search-input" placeholder="Search for the professor...">
+            <button type="submit" class="search-button">Search</button>
         </form>
     </div>
     
@@ -796,13 +1007,25 @@
 
     <!-- قسم الذكاء الاصطناعي -->
     <div class="ai-section">
-        <h2>الذكاء الاصطناعي</h2>
-        <p>هل لديك استفسارات حول الأساتذة أو الموقع؟ استخدم الذكاء الاصطناعي للتفاعل والحصول على إجابات فورية!</p>
+        <h2>AI for helping(beta)</h2>
+        <p>Do you have any questions about the professors or the website? Use Artificial Intelligence to interact and get instant answers!</p>
         <div class="chat-box" id="chatBox">
             <!-- الرسائل ستظهر هنا -->
         </div>
-        <input type="text" class="chat-input" id="chatInput" placeholder="اكتب سؤالك هنا...">
-        <button class="chat-button" onclick="sendMessage()">إرسال</button>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your question here...">
+        <button class="chat-button" onclick="sendMessage()">send</button>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <!-- Displaying dynamic code text -->
+        <p class="code-text">The Developers </p>
+        <!-- Programmers' names with animation and clickable links -->
+        <p class="programmers">
+            Abdullah Baban &nbsp;&nbsp;&nbsp; Mohamed Dalo &nbsp;&nbsp;&nbsp; Habil Khorani
+        </p>
+        <br>
+        <p>&copy; 2024 All rights reserved to the Department of Informatics & Software Engineering, Cihan University - Erbil.</p>
+        <p><a href="https://cihanuniversity.edu.iq/college-of-engineering/department-of-informatics-and-software-engineering/" target="_blank">Cihan University Official Website</a></p>
     </div>
 
     <script>
@@ -824,57 +1047,6 @@
                 });
             });
         });
-
-        function toggleLanguage() {
-    var currentLang = document.documentElement.lang;
-    var newLang = currentLang === "ar" ? "en" : (currentLang === "en" ? "ku" : "ar");
-    document.documentElement.lang = newLang;
-    localStorage.setItem('lang', newLang); // تخزين اللغة الجديدة في localStorage
-    window.location.reload(); // إعادة تحميل الصفحة لتطبيق التغيير
-}
-function updateLanguageUI(lang) {
-    var languageButton = document.querySelector('.language-toggle');
-    var menuItems = document.querySelectorAll("nav ul li a");
-    var welcomeSection = document.querySelector(".welcome-section h2");
-    var welcomeText = document.querySelector(".welcome-section p");
-
-    switch(lang) {
-        case 'en':
-            languageButton.textContent = "AR";
-            menuItems[0].textContent = "Home";
-            menuItems[1].textContent = "About Professors";
-            menuItems[2].textContent = "Research";
-            menuItems[3].textContent = "Contact Us";
-            welcomeSection.textContent = "Welcome to the Professors' Website!";
-            welcomeText.textContent = "We provide you with comprehensive information about the best professors in their fields, along with details about their academic and teaching experience. Enjoy getting to know our faculty members and benefit from their expertise.";
-            break;
-        case 'ku':
-            languageButton.textContent = "EN";
-            menuItems[0].textContent = "Sereke";
-            menuItems[1].textContent = "Derbarê Mamosteyan";
-            menuItems[2].textContent = "Lêkolîn";
-            menuItems[3].textContent = "Têkilî";
-            welcomeSection.textContent = "Bi xêr hatin di malpera Mamosteyan de!";
-            welcomeText.textContent = "Em hûnê bi agahdariya giştî ya herî baş ya mamosteyan pêşkêş dikin, bi detayên derbarê tecrûbeyên akademîk û fêrbîn yên wan. Ji bo naskirina endamên kadrê me hûn xweş bikin û ji tecrûbeyên wan sûd werbigirin.";
-            break;
-        case 'ar':
-            languageButton.textContent = "KU";
-            menuItems[0].textContent = "الصفحة الرئيسية";
-            menuItems[1].textContent = "عن الأساتذة";
-            menuItems[2].textContent = "الأبحاث";
-            menuItems[3].textContent = "تواصل معنا";
-            welcomeSection.textContent = "مرحبًا بكم في موقع الأساتذة!";
-            welcomeText.textContent = "نحن نقدم لكم معلومات شاملة عن أفضل الأساتذة في مجالاتهم مع تفاصيل حول خبراتهم الأكاديمية والتدريسية. استمتعوا بالتعرف على أعضاء هيئة التدريس لدينا واستفيدوا من خبراتهم.";
-            break;
-    }
-}
-document.addEventListener('DOMContentLoaded', function() {
-    var lang = localStorage.getItem('lang') || 'ar'; // تحميل اللغة المخزنة أو العربية كافتراضي
-    document.documentElement.lang = lang; // تعيين اللغة للوثيقة
-    updateLanguageUI(lang); // تحديث الواجهة حسب اللغة المختارة
-});
-
-
 
         function sendMessage() {
             const chatBox = document.getElementById('chatBox');

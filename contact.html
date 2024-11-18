@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="En">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +36,8 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
+    text-align: left;
+    direction: ltr;
 }
 
 .contact-section:hover {
@@ -53,6 +55,8 @@
     background-color: #ffffff;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(58, 61, 152, 0.1);
+    text-align: left;
+    direction: ltr;
 }
 
 .contact-form {
@@ -310,67 +314,67 @@
 </head>
 <body>
     <div class="contact-section">
-        <h1>تواصل معنا</h1>
-        <p>نرحب بجميع استفساراتكم وآرائكم. يمكنكم التواصل معنا من خلال النموذج أدناه.</p>
+        <h1>Contact Us</h1>
+        <p>We welcome all your inquiries and feedback. You can contact us through the form below.</p>
         
         <div class="contact-form">
             
-                <label for="name">الاسم:</label>
-                <input type="text" id="name" name="name" placeholder="أدخل اسمك" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+        
+            <button type="submit">
+                <span>Send</span> <img src="https://cdn-icons-png.flaticon.com/512/60/60525.png" alt="send icon" width="16" height="16">
+            </button>
             
-                <label for="email">البريد الإلكتروني:</label>
-                <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required>
-            
-                <label for="message">الرسالة:</label>
-                <textarea id="message" name="message" rows="5" placeholder="اكتب رسالتك هنا..." required></textarea>
-            
-                <button type="submit">
-                    <span>إرسال</span> <img src="https://cdn-icons-png.flaticon.com/512/60/60525.png" alt="send icon" width="16" height="16">
-                </button>
-                <div id="confirmationModal" class="modal">
-    <div class="modal-content">
-        <h2 class="success-message">تم إرسال رسالتك بنجاح!</h2>
-        <p>شكرًا لتواصلك معنا. سنقوم بالرد على استفسارك في أقرب وقت.</p>
-        <button onclick="closeModal()">إغلاق</button>
-        <dotlottie-player src="https://lottie.host/2a9a1099-240c-4068-bbcc-b333841cf2b2/rKevPq2rBS.json" background="transparent" speed="1" style="width: 50px; height: 50px; position: absolute; " loop autoplay></dotlottie-player>
-
-    </div>
-</div>
-
-                            
+            <div id="confirmationModal" class="modal">
+                <div class="modal-content">
+                    <h2 class="success-message">Your message has been sent successfully!</h2>
+                    <p>Thank you for reaching out. We will respond to your inquiry as soon as possible.</p>
+                    <button onclick="closeModal()">Close</button>
+                    <dotlottie-player src="https://lottie.host/2a9a1099-240c-4068-bbcc-b333841cf2b2/rKevPq2rBS.json" background="transparent" speed="1" style="width: 50px; height: 50px; position: absolute;" loop autoplay></dotlottie-player>
+                </div>
+            </div>
             
         </div>
         
         <div class="contact-info">
-            <h2>معلومات الاتصال</h2>
-            <p>يمكنك أيضاً مراسلتنا عبر البريد الإلكتروني:</p>
+            <h2>Contact Information</h2>
+            <p>You can also reach us via email:</p>
             <p><a href="mailto:dalom2004@gmail.com">Muhammed Umed</a></p>
             <p><a href="mailto:manvirschweitzer6684@gmail.com">Habeel Butrus</a></p>
             <p><a href="mailto:abdullasardar34@gmail.com">Abdullah Sardar</a></p>
             
             <div class="social-media">
-                <h3>تابعونا على مواقع التواصل الاجتماعي</h3>
+                <h3>Follow us on social media</h3>
                 <a href="https://www.instagram.com/habil_khorany" class="social-icon" target="_blank">
                     <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram Icon" width="24" height="24">
-                    Habeel Butrus  
+                    Habeel Butrus
                 </a>
                 <a href="https://www.instagram.com/3b0.k" class="social-icon" target="_blank">
                     <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram Icon" width="24" height="24">
-                    Abdullah Sardar  
+                    Abdullah Sardar
                 </a>
                 <a href="https://www.instagram.com/d41.7" class="social-icon" target="_blank">
                     <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram Icon" width="24" height="24">
-                    Muhammed Umed  
+                    Muhammed Umed
                 </a>
             </div>
         </div>
+        
         <div style="text-align: center; margin-top: 20px;">
-            <a href="home.html" class="back-to-home">
-                العودة إلى الصفحة الرئيسية
+            <a href="index.html" class="back-to-home">
+                Return to Home Page
             </a>
         </div>
         
     </div>
+    
 
     <script>
         document.querySelector(".contact-form button").addEventListener("click", function() {

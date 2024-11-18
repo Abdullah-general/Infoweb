@@ -3,116 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شبكة البيانات المتصلة</title>
+    <title>معلومات الأستاذ</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
+
         body {
-            background: #002b54; /* خلفية داكنة */
-            overflow: hidden;
-            height: 100vh;
+            background: linear-gradient(135deg, #f3f4f6, #dfe7fd);
+            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
-        canvas {
-            display: block;
+
+        .info-card {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1); /* شفافية خفيفة على الخلفية */
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 0 15px 5px #0077b6;
+        }
+
+        /* خلفية الفضاء مع النجوم المتناثرة */
+        .space-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 220px; /* المساحة المحددة */
+            background-color: #000; /* خلفية فضائية سوداء */
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        /* النجوم المتناثرة */
+        .star {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: twinkle 1s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* تحريك القمر الصناعي */
+        .satellite {
+            position: absolute;
+            width: 25px; /* تقليص حجم القمر الصناعي */
+            height: 25px; /* تقليص حجم القمر الصناعي */
+            background-color: white;
+            border-radius: 50%;
+            animation: moveSatellite 10s infinite linear;
+        }
+
+        @keyframes moveSatellite {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* تأثير الموجات حول الأقمار الصناعية */
+        @keyframes waveAnimation {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3); /* تصغير الموجة */
+                opacity: 0;
+            }
+        }
+
+        .wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px; /* تقليص حجم الموجة */
+            height: 80px; /* تقليص حجم الموجة */
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            animation: waveAnimation 5s infinite;
+        }
+
+        .professor-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin-bottom: 30px;
+            border: 3px solid #0077b6;
+            object-fit: cover;
+            z-index: 2;
+            position: relative;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            z-index: 1;
+            background: linear-gradient(270deg, #003f5c, #007f5f, #2f4b7c, #665191, #a05195, #d45087, #003f5c);
+            background-size: 400% 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradientShift 4s linear infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .info-section {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+            z-index: 2;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0077b6;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 2;
+        }
+
+        .btn-back:hover {
+            background-color: #005f99;
+        }
+
+        @media (max-width: 650px) {
+            .professor-img {
+                width: 155px;
+                height: 155px;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .info-section h3 {
+                font-size: 1rem;
+            }
+            .info-section p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <canvas id="networkCanvas"></canvas>
 
-    <script>
-        const canvas = document.getElementById("networkCanvas");
-        const ctx = canvas.getContext("2d");
+    <div class="info-card">
+        <!-- خلفية الفضاء مع النجوم المتناثرة داخل المساحة المحددة -->
+        <div class="space-background">
+            <!-- النجوم المتناثرة -->
+            <div class="star" style="top: 10%; left: 20%; width: 3px; height: 3px;"></div>
+            <div class="star" style="top: 15%; left: 50%; width: 2px; height: 2px;"></div>
+            <div class="star" style="top: 30%; left: 80%; width: 4px; height: 4px;"></div>
+            <div class="star" style="top: 50%; left: 40%; width: 3px; height: 3px;"></div>
+            <div class="star" style="top: 70%; left: 60%; width: 2px; height: 2px;"></div>
+            <!-- إضافة المزيد من النجوم العشوائية -->
+            <div class="star" style="top: 40%; left: 10%; width: 4px; height: 4px;"></div>
+            <div class="star" style="top: 60%; left: 30%; width: 3px; height: 3px;"></div>
+            <div class="star" style="top: 80%; left: 90%; width: 2px; height: 2px;"></div>
+        </div>
 
-        // ضبط حجم الكانفس
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        <!-- إضافة قمرين صناعيين -->
+        <div class="satellite" style="top: 10%; left: 30%;"></div> <!-- قمر صناعي 1 -->
+        <div class="satellite" style="top: 15%; left: 70%;"></div> <!-- قمر صناعي 2 -->
 
-        const particles = [];
-        const particleCount = 50;
-        const maxDistance = 150;
+        <!-- إضافة تأثير الموجات -->
+        <div class="wave" style="top: 5%; left: 25%;"></div>
+        <div class="wave" style="top: 10%; left: 65%;"></div>
 
-        // إنشاء نقاط البيانات
-        class Particle {
-            constructor(x, y, vx, vy) {
-                this.x = x;
-                this.y = y;
-                this.vx = vx;
-                this.vy = vy;
-                this.radius = 3;
-            }
+        <!-- صورة الأستاذ -->
+        <img src="firas.jpg" alt="صورة الأستاذ" class="professor-img">
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = "#48cae4"; // لون النقاط
-                ctx.fill();
-            }
+        <!-- الاسم والتخصص -->
+        <br><h2><b>Firas Muhammad Zeki</b></h2>
+        <p class="specialization">Satellite Communication</p>
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
+        <!-- قسم المعلومات الأساسية -->
+        <div class="info-section">
+            <h3>Academic qualifications</h3>
+            <p>He holds a Assistant Professor degree in Satellite Communication Also have master in Bachelor from University of Technology - Iraq</p>
+        </div>
 
-                // ارتداد عند الحواف
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-        }
+        <!-- قسم سنوات الخبرة -->
+        <div class="info-section">
+            <h3>Years of experience</h3>
+            <p><b>24 Years</b> of teaching and research in the field of <b>Satellite Communications, System Analysis, Communication Skills, Software Project Management and Discrete Structure and Logic.</b></p>
+        </div>
 
-        // إنشاء مجموعة من النقاط
-        for (let i = 0; i < particleCount; i++) {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            const vx = (Math.random() - 0.5) * 2; // سرعة عشوائية
-            const vy = (Math.random() - 0.5) * 2; // سرعة عشوائية
-            particles.push(new Particle(x, y, vx, vy));
-        }
+        <!-- قسم الأبحاث والمنشورات -->
+        <div class="info-section">
+            <h3>Research and publications</h3>
+            <p>He has published numerous research papers in the fields of Satellite Communications, System Analysis, Communication Skills, Software Project Management and Discrete Structure and Logic, with over 57 citations and an h-index of 5, reflecting his academic impact in these fields. he has participated in several international conferences, and his work has been published in esteemed scientific journals.</p>
+        </div>
 
-        // رسم الخطوط بين النقاط القريبة
-        function drawConnections() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+        <!-- قسم المقررات التي يقوم بتدريسها -->
+        <div class="info-section">
+            <h3>Courses taught</h3>
+            <p>Satellite Communications, System Analysis, Communication Skills, Software Project Management and Discrete Structure and Logic.</p>
+        </div>
+        <div class="research-link-container">
+            <a href="https://scholar.google.com/citations?user=sReos08AAAAJ&hl=ar&oi=ao" class="research-link">See the professor's research</a>
+        </div>
 
-                    if (distance < maxDistance) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(72, 202, 228, ${1 - distance / maxDistance})`; // تقليل الشفافية مع زيادة المسافة
-                        ctx.lineWidth = 1;
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
+        <!-- زر العودة -->
+        <a href="index.html" class="btn-back">Return back to the home page</a>
+    </div>
 
-        // تحديث الرسومات
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // تنظيف الكانفس
-            particles.forEach((particle) => {
-                particle.update();
-                particle.draw();
-            });
-            drawConnections();
-            requestAnimationFrame(animate);
-        }
-
-        // بدء الحركة
-        animate();
-
-        // إعادة ضبط حجم الكانفس عند تغيير حجم النافذة
-        window.addEventListener("resize", () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
 </body>
 </html>
